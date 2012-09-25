@@ -86,6 +86,9 @@ function veeplay_embed($hook, $type, $return, $params) {
       if ($entity && strpos($entity->mimetype, 'video') !== FALSE) {
         return elgg_view('file/specialcontent/video/default', array('entity' => $entity));
       }
+      elseif ($entity && strpos($entity->mimetype, 'audio') !== FALSE) {
+        return elgg_view('file/specialcontent/audio/default', array('entity' => $entity));
+      }
     }
   }
   

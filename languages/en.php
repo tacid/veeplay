@@ -70,5 +70,8 @@ $english = array(
    encoding described in RFC 3986.",
 		'veeplay:encode:encoding' => "Select URL encode function to: Encode, Rawencode or OFF.<br />This affects both the audio and video player simultaneously:",
 		'veeplay:encode:encode' => "URL Encoding",
+    
+    //Embed Extender
+    'veeplay:embed_extender' => "Allow embedding of local audio/video into site content by Embed Extender?"
 );
 add_translation("en", $english);

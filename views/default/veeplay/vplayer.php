@@ -99,13 +99,22 @@ if($plugin_encode = elgg_get_plugin_setting("encode", "veeplay")){
 		$pathfile = $file_url."/".$filename;
 	}
 }
+
+// keep id's unique per page-load
+// as there could be more than one instance of this view
+global $VEEPLAY_INSTANCE;
+
+if (!$VEEPLAY_INSTANCE || !is_numeric($VEEPLAY_INSTANCE)) {
+  $VEEPLAY_INSTANCE = 0;
+}
+$VEEPLAY_INSTANCE++;
 ?>
 <!-- Place holder for JWPlayer-->
 <div class="skin">
-	<div name="mediaspace" id="mediaspace">
+	<div name="mediaspace" id="mediaspace<?php echo $VEEPLAY_INSTANCE; ?>">
 		<div class="VideoPlayer">
 			<video
-				id="mediaplayer01"
+				id="mediaplayer<?php echo $VEEPLAY_INSTANCE; ?>"
 				height="<?php echo $heightv; ?>"
 				width="<?php echo $widthv; ?>">
 				<source src="<?php echo $pathfile;?>" />
@@ -113,7 +122,7 @@ if($plugin_encode = elgg_get_plugin_setting("encode", "veeplay")){
 		</div>
 <!-- Set options for JWPlayer -->
 	<script type="text/javascript">
-		jwplayer("mediaplayer01").setup({
+		jwplayer("mediaplayer<?php echo $VEEPLAY_INSTANCE; ?>").setup({
 			flashplayer: '<?php echo $swf_url; ?>',
 			skin: '<?php echo $skin_url; ?>',
 			autoplay:'<?php echo $autostartv;?>',

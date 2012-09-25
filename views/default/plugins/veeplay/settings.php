@@ -43,6 +43,9 @@ if (!isset($vars['entity']->audio_start)) {
 if (!isset($vars['entity']->med_sharing)) {
 	$vars['entity']->med_sharing = 'off';
 	}
+if (!isset($vars['entity']->embed_extender)) {
+  $vars['entity']->embed_extender = 'yes';
+  }
 echo elgg_echo("veeplay:skin:options") . '<br /><br />';
 echo '<p style="padding-bottom:20px;border-bottom:solid 1px #999999;width:100%;">';
 // Setup option for urlencoding
@@ -204,3 +207,19 @@ echo '</div><div style="float:left;width:400px;margin:6px 0 0 20px;"><label>'. e
 echo "<em>" . elgg_echo("veeplay:size:option") . "</em><p>";
 // Show an image of reference screen sizes
 echo '<div style="float:right;width:587px;font-size:110%;text-align:center;margin:0 10px 0 0;"><img src="'. elgg_get_site_url() . 'mod/veeplay/graphics/screens.jpg" style="border:0;height:355px;width:587px;padding-bottom:0.5em;" alt="'.elgg_echo("veeplay:screen").'" /><br />'.elgg_echo("veeplay:screen").'</div><p style="clear:both;">';
+
+// allow/deny local embedding
+if (elgg_is_active_plugin('embed_extender')) {
+  echo "<br><br>";
+  echo elgg_view('input/dropdown', array(
+    'name' => 'params[embed_extender]',
+    'value' => $vars['entity']->embed_extender,
+    'options_values' => array(
+      'yes' => elgg_echo('option:yes'),
+      'no' => elgg_echo('option:no'),
+    ),
+  ));
+  echo "<label>" . elgg_echo('veeplay:embed_extender') . "</label>";
+
+  echo "<br><br>";
+}

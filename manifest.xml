@@ -23,5 +23,8 @@
 		<priority>after</priority>
 		<plugin>file</plugin>
 	</requires>
-	<activate_on_install>true</activate_on_install>
+  <suggests>
+    <type>plugin</type>
+    <name>embed_extender</name>
+  </suggests>
 </plugin_manifest>

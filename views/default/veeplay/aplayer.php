@@ -70,14 +70,15 @@ if($plugin_med_sharing = elgg_get_plugin_setting("med_sharing", "veeplay")){
 	$sharing = 'sharing-3';
 	}
 }
+$dbprefix=elgg_get_config('dbprefix');
 // Go to the DB and pull down the original media filename
-$result = mysql_query("SELECT {$CONFIG->dbprefix}metastrings.string
-FROM {$CONFIG->dbprefix}metastrings
-LEFT JOIN {$CONFIG->dbprefix}metadata
-ON {$CONFIG->dbprefix}metastrings.id = {$CONFIG->dbprefix}metadata.value_id
-LEFT JOIN {$CONFIG->dbprefix}objects_entity
-ON {$CONFIG->dbprefix}metadata.entity_guid = {$CONFIG->dbprefix}objects_entity.guid
-WHERE ({$CONFIG->dbprefix}objects_entity.guid = '{$vars['file_guid']}') AND ({$CONFIG->dbprefix}metastrings.string LIKE 'file/%')");
+$result = mysql_query("SELECT {$dbprefix}metastrings.string
+FROM {$dbprefix}metastrings
+LEFT JOIN {$dbprefix}metadata
+ON {$dbprefix}metastrings.id = {$dbprefix}metadata.value_id
+LEFT JOIN {$dbprefix}objects_entity
+ON {$dbprefix}metadata.entity_guid = {$dbprefix}objects_entity.guid
+WHERE ({$dbprefix}objects_entity.guid = '{$vars['file_guid']}') AND ({$dbprefix}metastrings.string LIKE 'file/%')");
 // Check query ran and result is populated
 if (!$result) {
 // Query failed, return to origin page with error

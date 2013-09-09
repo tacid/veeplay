@@ -12,8 +12,8 @@
 // Load jwplayer javascript
 elgg_load_js('veeplay');
 // Set location variables
-$swf_url = elgg_get_site_url() . 'mod/veeplay/player/player.swf';
-$file_url = elgg_get_site_url() . 'file/download/'.$vars['file_guid'];
+$swf_url = elgg_get_site_url() . 'mod/veeplay/player/jwplayer.flash.swf';
+$file_url = elgg_get_site_url() . 'file/play/'.$vars['file_guid'];
 $view_url = elgg_get_site_url() . 'file/view/'.$vars['file_guid'];
 // Set JW-Player options
 $skin_url = "";
@@ -58,14 +58,15 @@ if($plugin_med_sharing = elgg_get_plugin_setting("med_sharing", "veeplay")){
 	$sharing = 'sharing-3';
 	}
 }
+$dbprefix=elgg_get_config("dbprefix");
 // Go to DB and pull down filename data
-$result = mysql_query("SELECT {$CONFIG->dbprefix}metastrings.string
-FROM {$CONFIG->dbprefix}metastrings
-LEFT JOIN {$CONFIG->dbprefix}metadata
-ON {$CONFIG->dbprefix}metastrings.id = {$CONFIG->dbprefix}metadata.value_id
-LEFT JOIN {$CONFIG->dbprefix}objects_entity
-ON {$CONFIG->dbprefix}metadata.entity_guid = {$CONFIG->dbprefix}objects_entity.guid
-WHERE ({$CONFIG->dbprefix}objects_entity.guid = '{$vars['file_guid']}') AND ({$CONFIG->dbprefix}metastrings.string LIKE 'file/%')");
+$result = mysql_query("SELECT {$dbprefix}metastrings.string
+FROM {$dbprefix}metastrings
+LEFT JOIN {$dbprefix}metadata
+ON {$dbprefix}metastrings.id = {$dbprefix}metadata.value_id
+LEFT JOIN {$dbprefix}objects_entity
+ON {$dbprefix}metadata.entity_guid = {$dbprefix}objects_entity.guid
+WHERE ({$dbprefix}objects_entity.guid = '{$vars['file_guid']}') AND ({$dbprefix}metastrings.string LIKE 'file/%')");
 // Check query ran and result is populated
 if (!$result) {
 // Query failed, return to origin page with error
@@ -123,14 +124,9 @@ $VEEPLAY_INSTANCE++;
 <!-- Set options for JWPlayer -->
 	<script type="text/javascript">
 		jwplayer("mediaplayer<?php echo $VEEPLAY_INSTANCE; ?>").setup({
-			flashplayer: '<?php echo $swf_url; ?>',
-			skin: '<?php echo $skin_url; ?>',
 			autoplay:'<?php echo $autostartv;?>',
-			plugins: {"<?php echo $sharing; ?>": {
-				link: "<?php echo $view_url;?>"
-				}  
-			},
-			controlbar: 'bottom'
+                        file: '<?php echo $pathfile;?>',
+                        image: '/shot.png'
 		});
 	</script>
 	</div><!-- mediaspace -->
